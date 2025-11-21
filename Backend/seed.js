@@ -10,7 +10,7 @@ const items = [
   ["Chowmein", "Vegetable chowmein", 30, "images/chowmein.jpg"],
   ["Bread Omelette", "Fresh omelette sandwich", 25, "images/bread_omelette.jpg"],
   ["Scrambled Eggs", "Fluffy scrambled eggs", 25, "images/scrambled_eggs.jpg"],
-  ["Boiled Egg", "Single boiled egg", 10, "images/boiled_egg.jpg"],
+  ["Boiled Egg", "Single boiled egg", 10, "images/boiled_eggs.jpg"],
   ["Chips", "Crispy chips", 19, "images/chips.jpg"],
   ["Cold Drink", "Soft drink", 21, "images/cold_drink.jpg"],
   ["Yogurt", "Fresh yogurt", 30, "images/yogurt.jpg"]

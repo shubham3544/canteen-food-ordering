@@ -48,7 +48,7 @@
 // loadMenu();
 
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://canteen-backend-umau.onrender.com";
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 

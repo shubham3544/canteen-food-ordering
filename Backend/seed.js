@@ -16,12 +16,16 @@ const items = [
   ["Yogurt", "Fresh yogurt", 30, "images/yogurt.jpg"]
 ];
 
-const stmt = db.prepare(
-  "INSERT INTO menu_items (name, description, price, image_url) VALUES (?, ?, ?, ?)"
-);
+// ✅ CHECK IF DATA ALREADY EXISTS
+const count = db.prepare("SELECT COUNT(*) AS total FROM menu_items").get();
 
-items.forEach(item => {
-  stmt.run(item);
-});
+if (count.total === 0) {
+  const stmt = db.prepare(
+    "INSERT INTO menu_items (name, description, price, image_url) VALUES (?, ?, ?, ?)"
+  );
 
-console.log("✅ Menu items inserted into database");
+  items.forEach(item => stmt.run(item));
+  console.log("✅ Menu seeded successfully");
+} else {
+  console.log("ℹ️ Menu already exists, skipping seed");
+}

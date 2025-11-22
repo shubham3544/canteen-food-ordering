@@ -8,7 +8,6 @@
 // });
 
 // module.exports = db;
-
 const Database = require("better-sqlite3");
 const path = require("path");
 
@@ -18,20 +17,18 @@ const dbPath = path.join(__dirname, "canteen.db");
 // Create / Open database
 const db = new Database(dbPath);
 
-// ✅ AUTO-CREATE REQUIRED TABLES (only if missing)
-
-// MENU ITEMS
+// ✅ MENU ITEMS TABLE (NO DUPLICATES ALLOWED)
 db.prepare(`
 CREATE TABLE IF NOT EXISTS menu_items (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT NOT NULL,
+  name TEXT UNIQUE,
   description TEXT,
   price REAL NOT NULL,
   image_url TEXT
 );
 `).run();
 
-// ORDERS TABLE
+// ✅ ORDERS TABLE
 db.prepare(`
 CREATE TABLE IF NOT EXISTS orders (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -41,7 +38,7 @@ CREATE TABLE IF NOT EXISTS orders (
 );
 `).run();
 
-// ORDER ITEMS TABLE
+// ✅ ORDER ITEMS TABLE
 db.prepare(`
 CREATE TABLE IF NOT EXISTS order_items (
   id INTEGER PRIMARY KEY AUTOINCREMENT,

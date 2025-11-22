@@ -1,29 +1,29 @@
-// server.js
 const express = require("express");
 const cors = require("cors");
 
-
 const app = express();
 
-// Middlewares
-app.use(cors());
-app.use(express.json());
-app.use("/images", express.static("public/images"));
+// ✅ Proper CORS for Netlify + Render
+app.use(cors({
+  origin: "*"
+}));
 
+app.use(express.json());
+
+// Serve images
+app.use("/images", express.static("public/images"));
 
 // Routes
 const menuRoute = require("./routes/menu");
 const orderRoutes = require("./routes/order");
-app.use("/order", orderRoutes);
 
-
-// Use routes
+// ✅ Register routes ONCE only
 app.use("/menu", menuRoute);
 app.use("/order", orderRoutes);
 
 // Default route
 app.get("/", (req, res) => {
-    res.send("Canteen backend is running...");
+  res.send("Canteen backend is running...");
 });
 
 // Start server

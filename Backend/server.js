@@ -1,7 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 
+require("./seed"); // ✅ ADD THIS LINE
+
 const app = express();
+
 
 // ✅ Proper CORS for Netlify + Render
 app.use(cors({

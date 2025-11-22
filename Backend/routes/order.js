@@ -21,10 +21,16 @@ router.post("/", (req, res) => {
     if (err) return res.status(500).json({ message: "Database error" });
 
     // Step 2: calculate total
-    items.forEach(cartItem => {
-      const dbItem = dbItems.find(i => i.id === cartItem.id);
-      total += dbItem.price * cartItem.quantity;
-    });
+   items.forEach(cartItem => {
+  const dbItem = dbItems.find(i => i.id === cartItem.id);
+
+  if (!dbItem) {
+    throw new Error("Menu item not found in database: ID " + cartItem.id);
+  }
+
+  total += dbItem.price * cartItem.quantity;
+});
+
 
     // Step 3: insert order
     const insertOrder = "INSERT INTO orders (user_id, total_amount) VALUES (?, ?)";

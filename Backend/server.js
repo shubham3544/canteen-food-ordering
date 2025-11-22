@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 
-require("./seed"); // ✅ ADD THIS LINE
+// require("./seed"); // ✅ ADD THIS LINE
 
 const app = express();
 

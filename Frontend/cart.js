@@ -1,5 +1,6 @@
 // ===== CONFIG =====
-const API_URL = "http://localhost:5000";   // backend URL
+const API_URL = "https://canteen-backend-umau.onrender.com";
+   // backend URL
 
 // ===== LOAD CART FROM LOCAL STORAGE =====
 let cart = JSON.parse(localStorage.getItem("cart")) || [];

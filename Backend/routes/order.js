@@ -54,4 +54,44 @@ router.post("/", (req, res) => {
   });
 });
 
+router.get("/view-orders", (req, res) => {
+  try {
+    const sql = `
+      SELECT 
+        o.id AS order_id,
+        o.total_amount,
+        oi.quantity,
+        m.name AS item_name,
+        oi.price_at_order
+      FROM orders o
+      JOIN order_items oi ON o.id = oi.order_id
+      JOIN menu_items m ON oi.menu_item_id = m.id
+      ORDER BY o.id DESC
+    `;
+
+    const stmt = db.prepare(sql);
+    const rows = stmt.all();
+
+    res.json(rows);
+  } catch (error) {
+    console.error("SQL ERROR 👉", error);   // ✅ IMPORTANT
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ✅ DEBUG ROUTE - Check available tables in SQLite
+router.get("/check-tables", (req, res) => {
+  try {
+    const stmt = db.prepare("SELECT name FROM sqlite_master WHERE type='table';");
+    const tables = stmt.all();
+    res.json(tables);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+
+
 module.exports = router;

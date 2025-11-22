@@ -13,11 +13,13 @@ app.use("/images", express.static("public/images"));
 
 // Routes
 const menuRoute = require("./routes/menu");
-const ordersRoute = require("./routes/order");
+const orderRoutes = require("./routes/order");
+app.use("/order", orderRoutes);
+
 
 // Use routes
 app.use("/menu", menuRoute);
-app.use("/order", ordersRoute);
+app.use("/order", orderRoutes);
 
 // Default route
 app.get("/", (req, res) => {

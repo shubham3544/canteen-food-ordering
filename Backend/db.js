@@ -12,21 +12,46 @@
 const Database = require("better-sqlite3");
 const path = require("path");
 
+// Database file path
 const dbPath = path.join(__dirname, "canteen.db");
+
+// Create / Open database
 const db = new Database(dbPath);
 
-// Create table if not exists
+// ✅ AUTO-CREATE REQUIRED TABLES (only if missing)
+
+// MENU ITEMS
 db.prepare(`
-  CREATE TABLE IF NOT EXISTS menu_items (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    description TEXT,
-    price INTEGER,
-    image_url TEXT
-  )
+CREATE TABLE IF NOT EXISTS menu_items (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  description TEXT,
+  price REAL NOT NULL,
+  image_url TEXT
+);
 `).run();
 
-console.log("SQLite database ready ✅");
+// ORDERS TABLE
+db.prepare(`
+CREATE TABLE IF NOT EXISTS orders (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER,
+  total_amount REAL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+`).run();
+
+// ORDER ITEMS TABLE
+db.prepare(`
+CREATE TABLE IF NOT EXISTS order_items (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  order_id INTEGER,
+  menu_item_id INTEGER,
+  quantity INTEGER,
+  price_at_order REAL,
+  FOREIGN KEY(order_id) REFERENCES orders(id),
+  FOREIGN KEY(menu_item_id) REFERENCES menu_items(id)
+);
+`).run();
 
 module.exports = db;
-

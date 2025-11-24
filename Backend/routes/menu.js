@@ -30,4 +30,22 @@ router.get("/", (req, res) => {
   }
 });
 
+router.get("/fix-duplicates", (req, res) => {
+  try {
+    db.prepare(`
+      DELETE FROM menu_items
+      WHERE id NOT IN (
+        SELECT MIN(id)
+        FROM menu_items
+        GROUP BY name
+      )
+    `).run();
+
+    res.json({ message: "✅ Duplicate menu items removed" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 module.exports = router;
